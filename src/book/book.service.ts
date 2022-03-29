@@ -1,12 +1,21 @@
 import { Injectable } from '@nestjs/common';
 
-import { Book } from './entities/book.entity';
+import { Book } from './model/book.model';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { BookDocument } from './entities/book.entity';
+import { Model, Connection } from 'mongoose';
+import { IBookDTO } from './model/book.dto';
 
 @Injectable()
 export class BookService {
   private readonly books: Book[] = [];
 
-  constructor() {
+  constructor(
+    @InjectModel(Book.name)
+    private BookModel: Model<BookDocument>,
+    @InjectConnection()
+    private connection: Connection,
+  ) {
     this.books = [
       {
         id: 1,
@@ -31,11 +40,23 @@ export class BookService {
     ];
   }
 
-  findAll(): Book[] {
-    return this.books;
+  findAll(): Promise<BookDocument[]> {
+    return this.BookModel.find().exec();
   }
 
   findOne(id: number) {
-    return this.books.find((book) => book.id === id);
+    return this.BookModel.findById({ _id: id }).exec();
+  }
+
+  create(dto: IBookDTO): Promise<BookDocument> {
+    const book = new this.BookModel(dto);
+    return book.save();
+  }
+  update(id: number, data: IBookDTO): Promise<BookDocument> {
+    return this.BookModel.findOneAndUpdate({ _id: id }, data).exec();
+  }
+
+  delete(id: number): Promise<BookDocument> {
+    return this.BookModel.findByIdAndDelete({ _id: id }).exec();
   }
 }

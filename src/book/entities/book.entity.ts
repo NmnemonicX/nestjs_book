@@ -1,21 +1,29 @@
-interface IBook {
-  id: number;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
+export type BookDocument = Book & Document;
+
+@Schema()
+export class Book {
+  @Prop({ required: true })
   title: string;
+
+  @Prop()
   description: string;
+
+  @Prop()
   authors: string;
+
+  @Prop()
   favorite: string;
+
+  @Prop()
   fileCover: string;
+
+  @Prop()
   fileName: string;
+
+  @Prop()
   fileBook: string;
 }
 
-export class Book implements IBook {
-  authors: string;
-  description: string;
-  favorite: string;
-  fileBook: string;
-  fileCover: string;
-  fileName: string;
-  id: number;
-  title: string;
-}
+export const BookSchema = SchemaFactory.createForClass(Book);
