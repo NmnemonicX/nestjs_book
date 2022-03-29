@@ -44,7 +44,7 @@ export class BookService {
     return this.BookModel.find().exec();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.BookModel.findById({ _id: id }).exec();
   }
 
@@ -52,11 +52,11 @@ export class BookService {
     const book = new this.BookModel(dto);
     return book.save();
   }
-  update(id: number, data: IBookDTO): Promise<BookDocument> {
+  update(id: string, data: IBookDTO): Promise<BookDocument> {
     return this.BookModel.findOneAndUpdate({ _id: id }, data).exec();
   }
 
-  delete(id: number): Promise<BookDocument> {
+  delete(id: string): Promise<BookDocument> {
     return this.BookModel.findByIdAndDelete({ _id: id }).exec();
   }
 }

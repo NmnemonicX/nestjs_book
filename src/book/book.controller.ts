@@ -22,7 +22,7 @@ export class BookController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.bookService.findOne(+id);
+    return this.bookService.findOne(id);
   }
 
   @Post()
@@ -35,11 +35,11 @@ export class BookController {
     @Param('id') id: string,
     @Body() body: IBookDTO,
   ): Promise<BookDocument> {
-    return this.bookService.update(+id, body);
+    return this.bookService.update(id, body);
   }
 
   @Delete(':id')
   async deleteBook(@Param('id') id: string): Promise<BookDocument> {
-    return this.bookService.delete(+id);
+    return this.bookService.delete(id);
   }
 }
