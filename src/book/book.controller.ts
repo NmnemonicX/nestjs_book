@@ -5,12 +5,14 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put, UseInterceptors,
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { IBookDTO } from './model/book.dto';
 import { BookDocument } from './entities/book.entity';
+import { BookInterceptor } from '../Interceptors/book.Interceptor';
 
+@UseInterceptors(BookInterceptor)
 @Controller('book')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
