@@ -12,6 +12,7 @@ import { IBookDTO } from './model/book.dto';
 import { BookDocument } from './entities/book.entity';
 import { BookInterceptor } from '../Interceptors/book.Interceptor';
 import { book_paramsPipePipe } from '../pipes/book_params.pipe';
+import {Book_bodyPipe} from "../pipes/book_body.pipe";
 
 @UseInterceptors(BookInterceptor)
 @Controller('book')
@@ -30,6 +31,7 @@ export class BookController {
   }
 
   @Post()
+  @UsePipes(new Book_bodyPipe())
   async create(@Body() Dto: IBookDTO) {
     await this.bookService.create(Dto);
   }
