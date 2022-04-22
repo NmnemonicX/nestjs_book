@@ -2,17 +2,19 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, HttpException, HttpStatus,
   Param,
   Post,
-  Put, UseInterceptors, UsePipes,
+  Put,
+  UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { IBookDTO } from './model/book.dto';
 import { BookDocument } from './entities/book.entity';
 import { BookInterceptor } from '../Interceptors/book.Interceptor';
 import { book_paramsPipePipe } from '../pipes/book_params.pipe';
-import {Book_bodyPipe} from "../pipes/book_body.pipe";
+import { Book_bodyPipe } from '../pipes/book_body.pipe';
 
 @UseInterceptors(BookInterceptor)
 @Controller('book')
@@ -21,6 +23,7 @@ export class BookController {
 
   @Get()
   findAll() {
+   // throw new Error('для тестирования ошибок');
     return this.bookService.findAll();
   }
 
