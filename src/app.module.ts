@@ -13,6 +13,7 @@ import { LocalStrategy } from './auth/strategy/LocalStrategy';
   imports: [
     PassportModule.register({ session: true }),
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: '.development.env', // `.${process.env.NODE_ENV}.env`,
     }),
     MongooseModule.forRoot('mongodb://localhost:27017/demo'),

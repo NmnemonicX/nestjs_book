@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Connection, Model } from 'mongoose';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
@@ -10,6 +11,7 @@ export class UserService {
     private UserModel: Model<UserDocument>,
     @InjectConnection()
     private connection: Connection,
+    private jwtService: JwtService,
   ) {}
 
   async create(data: User): Promise<UserDocument> {
@@ -49,5 +51,16 @@ export class UserService {
 
   deleteUser(id: string): Promise<UserDocument> {
     return this.UserModel.findOneAndUpdate({ _id: id }).exec();
+  }
+
+  async signIn(user: any) {
+    const payload = {
+      id: user._id.toString(),
+      email: user.email,
+      firstName: user.firstName,
+    };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
   }
 }

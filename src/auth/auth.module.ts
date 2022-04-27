@@ -8,9 +8,6 @@ import { UserModule } from '../user/user.module';
   controllers: [AuthController],
   imports: [
     PassportModule,
-     // JwtModule.register({
-     //   secret: process.env.SECRET_KEY,
-     // }),
     UserModule,
   ],
   exports: [AuthService],
