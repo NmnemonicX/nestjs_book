@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BookService } from './book.service';
 import { Model } from 'mongoose';
-import { getModelToken } from '@nestjs/mongoose';
+import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Book } from './entities/book.entity';
-
+import { BookModule } from './book.module';
 
 const mockBook = {
   title: 'test_linux guru',
@@ -21,6 +21,10 @@ describe('BookService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        BookModule,
+        MongooseModule.forRoot('mongodb://localhost:27017/demo'),
+      ],
       providers: [
         BookService,
         {
@@ -44,27 +48,46 @@ describe('BookService', () => {
   });
 
   it('should insert a new book', async () => {
-    jest.spyOn(model, 'create').mockImplementationOnce(() =>
-      Promise.resolve({
-        title: 'test_insert_linux guru',
-        description: 'test_insert_for admins',
-        authors: 'test_insert_and me',
-        favorite: 'test_insert_aaa',
-        fileCover: 'test_insert_Cover2',
-        fileName: 'test_insert_lnx.doc',
-        fileBook: 'test_insert_',
-      }),
+    jest.spyOn(model, 'create').mockImplementationOnce(
+      () =>
+        Promise.resolve({
+          title: 'test_linux guru',
+          description: 'test_for admins',
+          authors: 'test_and me',
+          favorite: 'test_aaa',
+          fileCover: 'test_Cover2',
+          fileName: 'test_lnx.doc',
+          fileBook: 'test_',
+        }),
+      // Promise.resolve({
+      //   title: 'test_insert_linux guru',
+      //   description: 'test_insert_for admins',
+      //   authors: 'test_insert_and me',
+      //   favorite: 'test_insert_aaa',
+      //   fileCover: 'test_insert_Cover2',
+      //   fileName: 'test_insert_lnx.doc',
+      //   fileBook: 'test_insert_',
+      // }),
     );
 
     const newBook = await service.create({
-      title: 'test_create_linux guru',
-      description: 'test_create_for admins',
-      authors: 'test_create_and me',
-      favorite: 'test_create_aaa',
-      fileCover: 'test_create_Cover2',
-      fileName: 'test_create_lnx.doc',
-      fileBook: 'test_create_',
+      title: 'test_linux guru',
+      description: 'test_for admins',
+      authors: 'test_and me',
+      favorite: 'test_aaa',
+      fileCover: 'test_Cover2',
+      fileName: 'test_lnx.doc',
+      fileBook: 'test_',
     });
+    // const newBook = await service.create({
+    //   title: 'test_create_linux guru',
+    //   description: 'test_create_for admins',
+    //   authors: 'test_create_and me',
+    //   favorite: 'test_create_aaa',
+    //   fileCover: 'test_create_Cover2',
+    //   fileName: 'test_create_lnx.doc',
+    //   fileBook: 'test_create_',
+    // });
     expect(newBook).toEqual(mockBook);
   });
 });

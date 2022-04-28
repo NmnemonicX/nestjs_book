@@ -5,7 +5,7 @@ import { BookModule } from './book.module';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Book, BookSchema} from "./entities/book.entity";
+import { Book, BookSchema } from './entities/book.entity';
 
 describe('BookController', () => {
   let app: INestApplication;
@@ -19,13 +19,8 @@ describe('BookController', () => {
       controllers: [BookController],
       imports: [
         BookModule,
-        MongooseModule.forFeature([
-          {
-            name: Book.name,
-            schema: BookSchema,
-          },
-        ])],
-
+        MongooseModule.forRoot('mongodb://localhost:27017/demo'),
+      ],
     })
       .overrideProvider(BookService)
       .useValue(bookService)
