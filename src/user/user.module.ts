@@ -7,7 +7,7 @@ import { User, UserSchema } from './entities/user.entity';
 import { LocalStrategy } from '../auth/strategy/LocalStrategy';
 import { AuthService } from '../auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import {ConfigModule} from "@nestjs/config";
+import { ConfigModule } from '@nestjs/config';
 
 const secret = process.env.SECRET_KEY;
 

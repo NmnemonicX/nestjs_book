@@ -2,10 +2,13 @@ import {
   Body,
   Controller,
   Delete,
-  Get, HttpException, HttpStatus,
+  Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -15,6 +18,7 @@ import { BookDocument } from './entities/book.entity';
 import { BookInterceptor } from '../Interceptors/book.Interceptor';
 import { book_paramsPipePipe } from '../pipes/book_params.pipe';
 import { Book_bodyPipe } from '../pipes/book_body.pipe';
+import { JwtAuthGuard } from '../Guards/jwt-auth.guard';
 
 @UseInterceptors(BookInterceptor)
 @Controller('book')
@@ -22,8 +26,9 @@ export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
-   // throw new Error('для тестирования ошибок');
+    // throw new Error('для тестирования ошибок');
     return this.bookService.findAll();
   }
 
