@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './auth/strategy/LocalStrategy';
+import { BookCommentModule } from './book-comment/book-comment.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { LocalStrategy } from './auth/strategy/LocalStrategy';
     BookModule,
     AuthModule,
     UserModule,
+    BookCommentModule,
   ],
   controllers: [AppController],
   providers: [AppService, LocalStrategy],
