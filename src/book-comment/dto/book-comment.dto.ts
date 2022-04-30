@@ -1,7 +1,9 @@
 export interface BookCommentDto {
-  id: number;
+  //id: number;
 
-  bookId: number;
+  user: string;
+
+  bookId: string;
 
   comment: string;
 }

@@ -6,7 +6,7 @@ import {
   BookCommentDocument,
 } from './entities/book-comment.entity';
 import { Connection, Model } from 'mongoose';
-import {BookDocument} from "../book/entities/book.entity";
+import { BookDocument } from '../book/entities/book.entity';
 
 @Injectable()
 export class BookCommentService {
@@ -23,7 +23,7 @@ export class BookCommentService {
   }
 
   findAllBookComment(bookId: string): Promise<BookCommentDocument[]> {
-    return this.BookCommentModel.find({ bookId }).exec();
+    return this.BookCommentModel.find({ bookId: bookId }).exec();
   }
 
   findAll(): Promise<BookCommentDocument[]> {
