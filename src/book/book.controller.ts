@@ -10,10 +10,12 @@ import {
 import { BookService } from './book.service';
 import { IBookDTO } from './model/book.dto';
 import { BookDocument } from './entities/book.entity';
+import { BookFirebaseService } from './book-firebase.service';
 
 @Controller('book')
 export class BookController {
-  constructor(private readonly bookService: BookService) {}
+  // constructor(private readonly bookService: BookService) {}
+  constructor(private readonly bookService: BookFirebaseService) {}
 
   @Get()
   findAll() {
